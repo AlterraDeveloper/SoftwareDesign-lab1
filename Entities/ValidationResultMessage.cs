@@ -6,5 +6,11 @@ namespace SoftwareDesign_lab1.Entities
     {
         public string Body { get; set; }
         public StatusWords Status { get; set; }
+        public string Offset { get; set; }
+
+        public ValidationResultMessage()
+        {
+            Offset = "";
+        }
     }
 }

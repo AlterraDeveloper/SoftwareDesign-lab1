@@ -1,18 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Xml;
 using SoftwareDesign_lab1.Entities;
 using SoftwareDesign_lab1.Enums;
+using System;
+using System.Collections.Generic;
 
 namespace SoftwareDesign_lab1.Parsers
 {
     public class KrsuParser : Parser
     {
+        private Package _package;
+
         public KrsuParser(Package package)
         {
-            Package = package;
+            _package = package;
 
             ConfigurationParameters = new List<ConfigurationParameter>
             {
@@ -20,94 +19,123 @@ namespace SoftwareDesign_lab1.Parsers
                 {
                     Name = "checker",
                     IsRequired = true,
-                    Attributes = null,
-                    Validator = new FileExistenceValidator(Package)
-                },
-                new ConfigurationParameter
-                {
-                    Name = "memorylimit",
-                    IsRequired = true,
-                    Attributes = null,
-                    Validator = new ExistenceValidator(Package)
-                },
-                new ConfigurationParameter
-                {
-                    Name = "timelimit",
-                    IsRequired = true,
-                    Attributes = null,
-                    Validator = new ExistenceValidator(Package)
-                },
-                new ConfigurationParameter
-                {
-                    Name = "testversion",
-                    IsRequired = true,
-                    Attributes = null,
-                    Validator = new ExistenceValidator(Package)
-                },
-                new ConfigurationParameter
-                {
-                    Name = "runtype",
-                    IsRequired = true,
-                    Attributes = null,
-                    Validator = new ExistenceValidator(Package)
-                },
-                new ConfigurationParameter
-                {
-                    Name = "test",
-                    IsRequired = true,
-                    Validator = new ExistenceValidator(Package),
-                    Attributes = new List<ConfigurationParameter>
-                    {
-                        new ConfigurationParameter
-                        {
-                            Name = "input",
-                            IsRequired = true,
-                            Attributes = null,
-                            Validator = new FileExistenceValidator(Package)
-                        },
-                        new ConfigurationParameter
-                        {
-                            Name = "output",
-                            IsRequired = true,
-                            Attributes = null,
-                            Validator = new FileExistenceValidator(Package)
-                        },
-                        new ConfigurationParameter
-                        {
-                            Name = "groupid",
-                            IsRequired = false,
-                            Attributes = null,
-                            Validator = new ExistenceValidator(Package)
-                        },
-                        new ConfigurationParameter
-                        {
-                            Name = "points",
-                            IsRequired = false,
-                            Attributes = null,
-                            Validator = new ExistenceValidator(Package)
-                        },
-                    }
+                    ValidationMode = CheckMode.FileExisting
                 },
                 new ConfigurationParameter
                 {
                     Name = "interactor",
                     IsRequired = false,
-                    Attributes = null,
-                    Validator = new FileExistenceValidator(Package)
+                    ValidationMode = CheckMode.FileExisting
                 },
                 new ConfigurationParameter
                 {
                     Name = "problem",
                     IsRequired = false,
-                    Attributes = null,
-                    Validator = new FileExistenceValidator(Package)
+                    ValidationMode = CheckMode.FileExisting
+                },
+                new ConfigurationParameter
+                {
+                    Name = "memorylimit",
+                    IsRequired = true,
+                    ValidationMode = CheckMode.Existing
+                },
+                new ConfigurationParameter
+                {
+                    Name = "timelimit",
+                    IsRequired = true,
+                    ValidationMode = CheckMode.Existing
+                },
+                new ConfigurationParameter
+                {
+                    Name = "testversion",
+                    IsRequired = true,
+                    ValidationMode = CheckMode.Existing
+                },
+                new ConfigurationParameter
+                {
+                    Name = "runtype",
+                    IsRequired = true,
+                    ValidationMode = CheckMode.Existing
                 },
                 new ConfigurationParameter
                 {
                     Name = "groups",
                     IsRequired = false,
-                    Attributes = null,
-                    Validator = new ExistenceValidator(Package)
+                    ValidationMode = CheckMode.Existing,
+                    NestedParameters = new List<ConfigurationParameter>
+                    {
+                        new ConfigurationParameter
+                        {
+                            Name = "group",
+                            IsRequired = false,
+                            ValidationMode = CheckMode.Existing,
+                            Attributes = new List<ConfigurationParameterAttribute>
+                            {
+                                new ConfigurationParameterAttribute
+                                {
+                                    Name = "id",
+                                    IsRequired = false,
+                                    ValidationMode = CheckMode.Existing,
+                                    ParameterName = "group"
+                                },
+                                new ConfigurationParameterAttribute
+                                {
+                                    Name = "points",
+                                    IsRequired = false,
+                                    ValidationMode = CheckMode.Existing,
+                                    ParameterName = "group"
+                                },
+                                new ConfigurationParameterAttribute
+                                {
+                                    Name = "prereq",
+                                    IsRequired = false,
+                                    ValidationMode = CheckMode.Existing,
+                                    ParameterName = "group"
+                                },
+                            }
+                        }
+                    }
+                },
+                new ConfigurationParameter
+                {
+                    Name = "test",
+                    IsRequired = true,
+                    ValidationMode = CheckMode.Existing,
+                    Attributes = new List<ConfigurationParameterAttribute>
+                    {
+                        new ConfigurationParameterAttribute
+                        {
+                            Name = "input",
+                            IsRequired = true,
+                            Attributes = null,
+                            ValidationMode = CheckMode.FileExisting,
+                            ParameterName = "test"
+                        },
+                        new ConfigurationParameterAttribute
+                        {
+                            Name = "output",
+                            IsRequired = true,
+                            Attributes = null,
+                            ValidationMode = CheckMode.FileExisting,
+                            ParameterName = "test"
+                        },
+                        new ConfigurationParameterAttribute
+                        {
+                            Name = "groupid",
+                            IsRequired = false,
+                            Attributes = null,
+                            ValidationMode = CheckMode.Existing,
+                            ParameterName = "test"
+                        },
+                        new ConfigurationParameterAttribute
+                        {
+                            Name = "points",
+                            IsRequired = false,
+                            Attributes = null,
+                            ValidationMode = CheckMode.Existing,
+                            ParameterName = "test"
+                        },
+                    }
                 },
             };
         }
@@ -116,18 +144,18 @@ namespace SoftwareDesign_lab1.Parsers
         {
             var parseResult = new List<ValidationResultMessage>();
 
-            if (Package != null)
+            if (_package != null)
             {
                 foreach (var parameter in ConfigurationParameters)
                 {
-                    parseResult.Add(parameter.Validator.Validate(parameter));
+                    parseResult.AddRange(parameter.Validate(_package));
                 }
             }
             else
             {
                 parseResult.Add(new ValidationResultMessage
                 {
-                    Body = "Invalid Package path",
+                    Body = "Invalid _package path",
                     Status = StatusWords.CRITICAL
                 });
             }
@@ -139,6 +167,8 @@ namespace SoftwareDesign_lab1.Parsers
         {
             foreach (var message in messages)
             {
+                Console.Write(message.Offset);
+
                 if (message.Status == StatusWords.OK)
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
@@ -146,7 +176,7 @@ namespace SoftwareDesign_lab1.Parsers
                 }
                 else if (message.Status == StatusWords.WARN)
                 {
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write("WARN : ");
                 }
                 else if (message.Status == StatusWords.ERR)
@@ -163,27 +193,6 @@ namespace SoftwareDesign_lab1.Parsers
                 Console.ResetColor();
                 Console.WriteLine(message.Body);
             }
-        }
-
-        private bool ExistingChecker(ConfigurationParameter parameter, XmlElement xRoot)
-        {
-            var xNode = xRoot.SelectSingleNode(parameter.Name);
-            return xNode != null;
-        }
-
-        private bool FileExistingChecker(ConfigurationParameter parameter, XmlElement xRoot, DirectoryInfo Package)
-        {
-            var xNode = xRoot.SelectSingleNode(parameter.Name);
-
-            if (xNode != null)
-            {
-                if (new DirectoryInfo(Path.Combine(Package.FullName, parameter.Name)).Exists)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }

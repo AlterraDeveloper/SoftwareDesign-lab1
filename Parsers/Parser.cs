@@ -6,7 +6,6 @@ namespace SoftwareDesign_lab1.Parsers
     public abstract class Parser
     {
         protected List<ConfigurationParameter> ConfigurationParameters;
-        public Package Package;
         public abstract List<ValidationResultMessage> Parse();
         public abstract void ShowResult(List<ValidationResultMessage> messages);
     }

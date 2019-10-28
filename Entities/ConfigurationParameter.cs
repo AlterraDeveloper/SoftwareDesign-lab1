@@ -1,4 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
+using SoftwareDesign_lab1.Enums;
+using SoftwareDesign_lab1.Validators;
 
 namespace SoftwareDesign_lab1.Entities
 {
@@ -6,7 +9,36 @@ namespace SoftwareDesign_lab1.Entities
     {
         public string Name { get; set; }
         public bool IsRequired { get; set; }
-        public List<ConfigurationParameter> Attributes { get; set; }
-        public Validator Validator { get; set; }
+        public CheckMode ValidationMode { get; set; }
+        public List<ConfigurationParameter> NestedParameters { get; set; }
+        public List<ConfigurationParameterAttribute> Attributes { get; set; }
+
+        public ConfigurationParameter()
+        {
+            NestedParameters = new List<ConfigurationParameter>();
+            Attributes = new List<ConfigurationParameterAttribute>();
+        }
+
+        public List<ValidationResultMessage> Validate(Package package)
+        {
+            var messages = new List<ValidationResultMessage>();
+
+            messages.AddRange(ValidatorFactory.GetValidator(ValidationMode, package).Validate(this));
+
+            if (messages.All(m => m.Status == StatusWords.OK))
+            {
+                foreach (var attribute in Attributes)
+                {
+                    messages.AddRange(ValidatorFactory.GetValidator(attribute.ValidationMode, package).Validate(attribute));
+                }
+
+                foreach (var nestedParameter in NestedParameters)
+                {
+                    messages.AddRange(ValidatorFactory.GetValidator(nestedParameter.ValidationMode, package).Validate(nestedParameter));
+                }
+            }
+
+            return messages;
+        }
     }
 }

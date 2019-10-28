@@ -39,11 +39,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\ConfigurationParameter.cs" />
-    <Compile Include="Entities\ExistenceValidator.cs" />
-    <Compile Include="Entities\FileExistenceValidator.cs" />
+    <Compile Include="Entities\ConfigurationParameterAttribute.cs" />
+    <Compile Include="Validators\ExistenceValidator.cs" />
+    <Compile Include="Validators\FileExistenceValidator.cs" />
     <Compile Include="Entities\Package.cs" />
     <Compile Include="Entities\ValidationResultMessage.cs" />
-    <Compile Include="Entities\Validator.cs" />
+    <Compile Include="Validators\Validator.cs" />
     <Compile Include="Enums\CheckMode.cs" />
     <Compile Include="Enums\StatusWords.cs" />
     <Compile Include="Parsers\KrsuParser.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Parsers\ParserFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\ValidatorFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
