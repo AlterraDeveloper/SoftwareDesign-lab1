@@ -66,7 +66,7 @@ namespace SoftwareDesign_lab1.Parsers
                     {
                         new ConfigurationParameter
                         {
-                            Name = "group",
+                            Name = "groups/group",
                             IsRequired = false,
                             ValidationMode = CheckMode.Existing,
                             Attributes = new List<ConfigurationParameterAttribute>
@@ -76,21 +76,21 @@ namespace SoftwareDesign_lab1.Parsers
                                     Name = "id",
                                     IsRequired = false,
                                     ValidationMode = CheckMode.Existing,
-                                    ParameterName = "group"
+                                    ParameterName = "groups/group"
                                 },
                                 new ConfigurationParameterAttribute
                                 {
                                     Name = "points",
                                     IsRequired = false,
                                     ValidationMode = CheckMode.Existing,
-                                    ParameterName = "group"
+                                    ParameterName = "groups/group"
                                 },
                                 new ConfigurationParameterAttribute
                                 {
                                     Name = "prereq",
                                     IsRequired = false,
                                     ValidationMode = CheckMode.Existing,
-                                    ParameterName = "group"
+                                    ParameterName = "groups/group"
                                 },
                             }
                         }
@@ -155,7 +155,7 @@ namespace SoftwareDesign_lab1.Parsers
             {
                 parseResult.Add(new ValidationResultMessage
                 {
-                    Body = "Invalid _package path",
+                    Body = "Invalid package path",
                     Status = StatusWords.CRITICAL
                 });
             }

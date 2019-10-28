@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using SoftwareDesign_lab1.Enums;
+using SoftwareDesign_lab1.Validators;
 
 namespace SoftwareDesign_lab1.Entities
 {
@@ -25,49 +26,33 @@ namespace SoftwareDesign_lab1.Entities
 
             if (_package.Configuration.DocumentElement != null)
             {
-                if (configurationParameter is ConfigurationParameterAttribute)
+                var xNodes = _package.Configuration.DocumentElement.SelectNodes(configurationParameter.Name);
+
+                for (int i = 0; i < xNodes.Count; i++)
                 {
-                    var attribute = (ConfigurationParameterAttribute)configurationParameter;
-
-                    var attrValue = _package.Configuration.DocumentElement.SelectSingleNode(attribute.ParameterName).Attributes[attribute.Name]?.Value;
-
                     var message = new ValidationResultMessage
                     {
-                        Body = attribute.ParameterName + " " + attribute.Name + " " + attrValue,
-                        Offset = "    "
+                        Body = configurationParameter.Name
                     };
-
-                    if (new FileInfo(Path.Combine(_package.PackageDirectoryInfo.FullName,attrValue)).Exists)
+                    if (new FileInfo(Path.Combine(_package.PackageDirectoryInfo.FullName, xNodes[i].InnerText))
+                        .Exists)
                     {
                         message.Status = StatusWords.OK;
                     }
                     else
                     {
-                        message.Status = attribute.IsRequired ? StatusWords.ERR : StatusWords.WARN;
+                        message.Status = configurationParameter.IsRequired ? StatusWords.ERR : StatusWords.WARN;
+                    }
+                    messages.Add(message);
+
+                    foreach (var attribute in configurationParameter.Attributes)
+                    {
+                        messages.AddRange(ValidatorFactory.GetValidator(attribute.ValidationMode, _package).Validate(attribute,i));
                     }
 
-                    messages.Add(message);
-                }
-                else
-                {
-                    var xNodes = _package.Configuration.DocumentElement.SelectNodes(configurationParameter.Name);
-
-                    foreach (XmlNode node in xNodes)
+                    foreach (var nestedParameters in configurationParameter.NestedParameters)
                     {
-                        var message = new ValidationResultMessage
-                        {
-                            Body = configurationParameter.Name
-                        };
-                        if (new FileInfo(Path.Combine(_package.PackageDirectoryInfo.FullName, node.InnerText))
-                            .Exists)
-                        {
-                            message.Status = StatusWords.OK;
-                        }
-                        else
-                        {
-                            message.Status = configurationParameter.IsRequired ? StatusWords.ERR : StatusWords.WARN;
-                        }
-                        messages.Add(message);
+                        messages.AddRange(ValidatorFactory.GetValidator(nestedParameters.ValidationMode, _package).Validate(nestedParameters));
                     }
                 }
             }
@@ -78,6 +63,38 @@ namespace SoftwareDesign_lab1.Entities
                     Body = "Configuration file is empty",
                     Status = StatusWords.CRITICAL
                 });
+            }
+
+            return messages;
+        }
+
+        public override IEnumerable<ValidationResultMessage> Validate(ConfigurationParameterAttribute configurationParameterAttribute, int indexOfParentInGroup = 0)
+        {
+            var messages = base.Validate(configurationParameterAttribute, indexOfParentInGroup).ToList();
+
+            if (messages.All(m => m.Status == StatusWords.OK))
+            {
+                messages.Clear();
+
+                var parameter = _package.Configuration.DocumentElement.SelectNodes(configurationParameterAttribute.ParameterName)[indexOfParentInGroup];
+                var attrValue = parameter.Attributes[configurationParameterAttribute.Name]?.Value;
+
+                var message = new ValidationResultMessage
+                {
+                    Body = configurationParameterAttribute.ParameterName + " " + configurationParameterAttribute.Name + " \"" + attrValue + "\"",
+                    Offset = "    "
+                };
+
+                if (new FileInfo(Path.Combine(_package.PackageDirectoryInfo.FullName, attrValue)).Exists)
+                {
+                    message.Status = StatusWords.OK;
+                }
+                else
+                {
+                    message.Status = configurationParameterAttribute.IsRequired ? StatusWords.ERR : StatusWords.WARN;
+                }
+
+                messages.Add(message);
             }
 
             return messages;

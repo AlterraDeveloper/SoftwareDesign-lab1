@@ -20,7 +20,7 @@ namespace SoftwareDesign_lab1.Entities
             }
             else
             {
-                Configuration = null;
+                throw new XmlException("Bad configuration file");
             }
            
         }
