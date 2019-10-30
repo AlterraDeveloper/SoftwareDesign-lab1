@@ -1,5 +1,7 @@
+using System;
 using System.IO;
 using System.Xml;
+using System.IO.Compression;
 
 namespace SoftwareDesign_lab1.Entities
 {
@@ -9,30 +11,27 @@ namespace SoftwareDesign_lab1.Entities
 
         private Package(string pathToPackage)
         {
-            PackageDirectoryInfo = new DirectoryInfo(pathToPackage);
-            
-            var xmlFilesInPackage = PackageDirectoryInfo.GetFiles("*.xml");
-            
-            if (xmlFilesInPackage.Length == 1)
+            using (PackageZipArchive = new ZipArchive(new FileStream(pathToPackage, FileMode.Open), ZipArchiveMode.Read))
             {
-                Configuration = new XmlDocument();
-                Configuration.Load(xmlFilesInPackage[0].FullName);
+                foreach (var zipArchiveEntry in PackageZipArchive.Entries)
+                {
+                    if (zipArchiveEntry.FullName.EndsWith("xml"))
+                    {
+                        Configuration = new XmlDocument();
+                        Configuration.Load(zipArchiveEntry.Open());
+                    }
+                }
             }
-            else
-            {
-                throw new XmlException("Bad configuration file");
-            }
-           
         }
 
-        public DirectoryInfo PackageDirectoryInfo { get; set; }
+        public ZipArchive PackageZipArchive { get; set; }
         public XmlDocument Configuration { get; set; }
 
         public static Package GetPackage(string pathToPackage)
         {
-            if (_package == null || _package.PackageDirectoryInfo.FullName != pathToPackage)
+            if (_package == null )
             {
-                if (Directory.Exists(pathToPackage))
+                if (File.Exists(pathToPackage))
                 {
                     _package = new Package(pathToPackage);
                 }

@@ -8,8 +8,6 @@ namespace SoftwareDesign_lab1.Entities
 {
     public class ExistenceValidator : Validator
     {
-        protected Package _package;
-
         public ExistenceValidator(Package package)
         {
             _package = package;
@@ -21,7 +19,7 @@ namespace SoftwareDesign_lab1.Entities
 
             if (_package.Configuration.DocumentElement != null)
             {
-                var xNodes = _package.Configuration.DocumentElement.SelectNodes(configurationParameter.Name);
+                var xNodes = GetConfigurationParameters(configurationParameter);
 
                 if (xNodes.Count == 0)
                 {
@@ -69,22 +67,22 @@ namespace SoftwareDesign_lab1.Entities
         {
             var messages = new List<ValidationResultMessage>();
 
-            var parameter = _package.Configuration.DocumentElement.SelectNodes(configurationParameterAttribute.ParameterName)[indexOfParentInGroup];
-            var attrValue = parameter.Attributes[configurationParameterAttribute.Name]?.Value;
+            var attrValue =
+                GetConfigurationParamenterAttributeValue(configurationParameterAttribute, indexOfParentInGroup);
 
             var message = new ValidationResultMessage
             {
-                Body = configurationParameterAttribute.ParameterName + " " + configurationParameterAttribute.Name + " \"" + attrValue + "\"",
+                Body = configurationParameterAttribute.ParameterName + " " + configurationParameterAttribute.Name + " = \"" + attrValue + "\"",
                 Offset = "    "
             };
 
-            if (string.IsNullOrEmpty(attrValue))
+            if (string.IsNullOrEmpty(attrValue) ==false)
             {
-                message.Status = configurationParameterAttribute.IsRequired ? StatusWords.ERR : StatusWords.WARN;
+                message.Status = StatusWords.OK;
             }
             else
             {
-                message.Status = StatusWords.OK;
+                message.Status = configurationParameterAttribute.IsRequired ? StatusWords.ERR : StatusWords.WARN;
             }
 
             messages.Add(message);

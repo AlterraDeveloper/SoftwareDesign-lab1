@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using SoftwareDesign_lab1.Entities;
 using SoftwareDesign_lab1.Parsers;
 using System.Xml;
@@ -9,7 +10,7 @@ namespace SoftwareDesign_lab1
     {
         public static void Main(string[] args)
         {
-            if (args.Length < 2)
+            if (args.Length != 2)
             {
                 Console.WriteLine("usage : program.exe [FORMAT] [PACKAGE]");
             }
@@ -30,9 +31,13 @@ namespace SoftwareDesign_lab1
                         Console.WriteLine("Parser not found");
                     }
                 }
-                catch (XmlException ex)
+                catch (XmlException)
                 {
-                    Console.WriteLine(ex.Message);
+                    Console.WriteLine("Bad XML configuration");
+                }
+                catch (InvalidDataException)
+                {
+                    Console.WriteLine("File is not ZIP archive");
                 }
                
             }
