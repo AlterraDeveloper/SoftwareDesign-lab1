@@ -10,6 +10,8 @@ namespace SoftwareDesign_lab1.Entities
         public string Name { get; set; }
         public bool IsRequired { get; set; }
         public CheckMode ValidationMode { get; set; }
+
+        public object[] AuxiliaryValues { get; set; }
         public List<ConfigurationParameter> NestedParameters { get; set; }
         public List<ConfigurationParameterAttribute> Attributes { get; set; }
 
@@ -17,13 +19,14 @@ namespace SoftwareDesign_lab1.Entities
         {
             NestedParameters = new List<ConfigurationParameter>();
             Attributes = new List<ConfigurationParameterAttribute>();
+            AuxiliaryValues = null;
         }
 
         public List<ValidationResultMessage> Validate(Package package)
         {
             var messages = new List<ValidationResultMessage>();
 
-            messages.AddRange(ValidatorFactory.GetValidator(ValidationMode, package).Validate(this));
+            messages.AddRange(ValidatorFactory.GetValidator(ValidationMode, package,AuxiliaryValues).Validate(this));
 
             if (messages.All(m => m.Status == StatusWords.OK))
             {

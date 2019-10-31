@@ -7,11 +7,9 @@ namespace SoftwareDesign_lab1.Parsers
 {
     public class KrsuParser : Parser
     {
-        private Package _package;
-
         public KrsuParser(Package package)
         {
-            _package = package;
+            Package = package;
 
             ConfigurationParameters = new List<ConfigurationParameter>
             {
@@ -37,25 +35,26 @@ namespace SoftwareDesign_lab1.Parsers
                 {
                     Name = "memorylimit",
                     IsRequired = true,
-                    ValidationMode = CheckMode.Existing
+                    ValidationMode = CheckMode.ValueIsInteger
                 },
                 new ConfigurationParameter
                 {
                     Name = "timelimit",
                     IsRequired = true,
-                    ValidationMode = CheckMode.Existing
+                    ValidationMode = CheckMode.ValueIsInteger
                 },
                 new ConfigurationParameter
                 {
                     Name = "testversion",
                     IsRequired = true,
-                    ValidationMode = CheckMode.Existing
+                    ValidationMode = CheckMode.ValueIsInteger
                 },
                 new ConfigurationParameter
                 {
                     Name = "runtype",
                     IsRequired = true,
-                    ValidationMode = CheckMode.Existing
+                    ValidationMode = CheckMode.ValueIsInRange,
+                    AuxiliaryValues = new object[]{0,2}
                 },
                 new ConfigurationParameter
                 {
@@ -75,14 +74,14 @@ namespace SoftwareDesign_lab1.Parsers
                                 {
                                     Name = "id",
                                     IsRequired = false,
-                                    ValidationMode = CheckMode.Existing,
+                                    ValidationMode = CheckMode.ValueIsInteger,
                                     ParameterName = "groups/group"
                                 },
                                 new ConfigurationParameterAttribute
                                 {
                                     Name = "points",
                                     IsRequired = false,
-                                    ValidationMode = CheckMode.Existing,
+                                    ValidationMode = CheckMode.ValueIsInteger,
                                     ParameterName = "groups/group"
                                 },
                                 new ConfigurationParameterAttribute
@@ -124,7 +123,7 @@ namespace SoftwareDesign_lab1.Parsers
                             Name = "groupid",
                             IsRequired = false,
                             Attributes = null,
-                            ValidationMode = CheckMode.Existing,
+                            ValidationMode = CheckMode.ValueIsInteger,
                             ParameterName = "test"
                         },
                         new ConfigurationParameterAttribute
@@ -132,67 +131,12 @@ namespace SoftwareDesign_lab1.Parsers
                             Name = "points",
                             IsRequired = false,
                             Attributes = null,
-                            ValidationMode = CheckMode.Existing,
+                            ValidationMode = CheckMode.ValueIsInteger,
                             ParameterName = "test"
                         },
                     }
                 },
             };
-        }
-
-        public override List<ValidationResultMessage> Parse()
-        {
-            var parseResult = new List<ValidationResultMessage>();
-
-            if (_package != null)
-            {
-                foreach (var parameter in ConfigurationParameters)
-                {
-                    parseResult.AddRange(parameter.Validate(_package));
-                }
-            }
-            else
-            {
-                parseResult.Add(new ValidationResultMessage
-                {
-                    Body = "Invalid package path",
-                    Status = StatusWords.CRITICAL
-                });
-            }
-
-            return parseResult;
-        }
-
-        public override void ShowResult(List<ValidationResultMessage> messages)
-        {
-            foreach (var message in messages)
-            {
-                Console.Write(message.Offset);
-
-                if (message.Status == StatusWords.OK)
-                {
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("OK : ");
-                }
-                else if (message.Status == StatusWords.WARN)
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("WARN : ");
-                }
-                else if (message.Status == StatusWords.ERR)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.Write("ERROR : ");
-                }
-                else if (message.Status == StatusWords.CRITICAL)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkRed;
-                    Console.Write("CRITICAL : ");
-                }
-
-                Console.ResetColor();
-                Console.WriteLine(message.Body);
-            }
         }
     }
 }
