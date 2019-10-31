@@ -1,10 +1,7 @@
-﻿using System;
+﻿using SoftwareDesign_lab1.Entities;
+using SoftwareDesign_lab1.Enums;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SoftwareDesign_lab1.Entities;
-using SoftwareDesign_lab1.Enums;
 
 namespace SoftwareDesign_lab1.Validators
 {

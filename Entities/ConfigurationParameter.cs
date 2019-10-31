@@ -32,7 +32,7 @@ namespace SoftwareDesign_lab1.Entities
             {
                 foreach (var attribute in Attributes)
                 {
-                    messages.AddRange(ValidatorFactory.GetValidator(attribute.ValidationMode, package).Validate(attribute));
+                    messages.AddRange(ValidatorFactory.GetValidator(attribute.ValidationMode, package,AuxiliaryValues).Validate(attribute));
                 }
 
                 foreach (var nestedParameter in NestedParameters)
