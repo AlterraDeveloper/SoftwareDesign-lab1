@@ -1,7 +1,6 @@
 using SoftwareDesign_lab1.Entities;
-using SoftwareDesign_lab1.Enums;
-using System;
 using System.Collections.Generic;
+using SoftwareDesign_lab1.Enums;
 
 namespace SoftwareDesign_lab1.Parsers
 {
@@ -35,19 +34,19 @@ namespace SoftwareDesign_lab1.Parsers
                 {
                     Name = "memorylimit",
                     IsRequired = true,
-                    ValidationMode = CheckMode.ValueIsInteger
+                    ValidationMode = CheckMode.ValueIsNumber
                 },
                 new ConfigurationParameter
                 {
                     Name = "timelimit",
                     IsRequired = true,
-                    ValidationMode = CheckMode.ValueIsInteger
+                    ValidationMode = CheckMode.ValueIsNumber
                 },
                 new ConfigurationParameter
                 {
                     Name = "testversion",
                     IsRequired = true,
-                    ValidationMode = CheckMode.ValueIsInteger
+                    ValidationMode = CheckMode.ValueIsNumber
                 },
                 new ConfigurationParameter
                 {
@@ -74,21 +73,21 @@ namespace SoftwareDesign_lab1.Parsers
                                 {
                                     Name = "id",
                                     IsRequired = false,
-                                    ValidationMode = CheckMode.ValueIsInteger,
+                                    ValidationMode = CheckMode.ValueIsNumber,
                                     ParameterName = "groups/group"
                                 },
                                 new ConfigurationParameterAttribute
                                 {
                                     Name = "points",
                                     IsRequired = false,
-                                    ValidationMode = CheckMode.ValueIsInteger,
+                                    ValidationMode = CheckMode.ValueIsNumber,
                                     ParameterName = "groups/group"
                                 },
                                 new ConfigurationParameterAttribute
                                 {
                                     Name = "prereq",
                                     IsRequired = false,
-                                    ValidationMode = CheckMode.Existing,
+                                    ValidationMode = CheckMode.ValueIsNotEmptyString,
                                     ParameterName = "groups/group"
                                 },
                             }
@@ -123,7 +122,7 @@ namespace SoftwareDesign_lab1.Parsers
                             Name = "groupid",
                             IsRequired = false,
                             Attributes = null,
-                            ValidationMode = CheckMode.ValueIsInteger,
+                            ValidationMode = CheckMode.ValueIsNumber,
                             ParameterName = "test"
                         },
                         new ConfigurationParameterAttribute
@@ -131,7 +130,7 @@ namespace SoftwareDesign_lab1.Parsers
                             Name = "points",
                             IsRequired = false,
                             Attributes = null,
-                            ValidationMode = CheckMode.ValueIsInteger,
+                            ValidationMode = CheckMode.ValueIsNumber,
                             ParameterName = "test"
                         },
                     }

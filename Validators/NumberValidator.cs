@@ -3,14 +3,14 @@ using System;
 
 namespace SoftwareDesign_lab1.Validators
 {
-    class IntegerValidator : ValueValidator
+    class NumberValidator : ValueValidator
     {
-        public IntegerValidator(Package package) : base(package)
+        public NumberValidator(Package package) : base(package)
         {
         }
         protected override bool CheckValue(string value)
         {
-            return int.TryParse(value, out _);
+            return double.TryParse(value, out _);
         }
     }
 }

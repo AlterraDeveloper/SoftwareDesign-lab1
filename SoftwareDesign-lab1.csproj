@@ -41,12 +41,16 @@
   <ItemGroup>
     <Compile Include="Entities\ConfigurationParameter.cs" />
     <Compile Include="Entities\ConfigurationParameterAttribute.cs" />
+    <Compile Include="Parsers\CatsParser.cs" />
+    <Compile Include="Validators\CollectionValidator.cs" />
     <Compile Include="Validators\ExistenceValidator.cs" />
     <Compile Include="Validators\FileExistenceValidator.cs" />
     <Compile Include="Entities\Package.cs" />
     <Compile Include="Entities\ValidationResultMessage.cs" />
-    <Compile Include="Validators\IntegerValidator.cs" />
+    <Compile Include="Validators\FileRangeValidator.cs" />
+    <Compile Include="Validators\NumberValidator.cs" />
     <Compile Include="Validators\RangeValidator.cs" />
+    <Compile Include="Validators\StringValidator.cs" />
     <Compile Include="Validators\Validator.cs" />
     <Compile Include="Enums\CheckMode.cs" />
     <Compile Include="Enums\StatusWords.cs" />

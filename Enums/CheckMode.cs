@@ -1,10 +1,13 @@
-namespace SoftwareDesign_lab1
+namespace SoftwareDesign_lab1.Enums
 {
     public enum CheckMode
     {
         Existing ,
         FileExisting ,
-        ValueIsInteger,
-        ValueIsInRange
+        ValueIsNumber,
+        ValueIsInRange,
+        ValueIsInCollection,
+        ValueIsNotEmptyString,
+        FileRangeExisting,
     }
 }

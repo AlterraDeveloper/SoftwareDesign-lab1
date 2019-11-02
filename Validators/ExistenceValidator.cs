@@ -1,21 +1,21 @@
-using SoftwareDesign_lab1.Enums;
-using SoftwareDesign_lab1.Validators;
 using System.Collections.Generic;
+using SoftwareDesign_lab1.Entities;
+using SoftwareDesign_lab1.Enums;
 
-namespace SoftwareDesign_lab1.Entities
+namespace SoftwareDesign_lab1.Validators
 {
     public class ExistenceValidator : Validator
     {
         public ExistenceValidator(Package package)
         {
-            _package = package;
+            Package = package;
         }
 
         public override IEnumerable<ValidationResultMessage> Validate(ConfigurationParameter configurationParameter)
         {
             var messages = new List<ValidationResultMessage>();
 
-            if (_package.Configuration.DocumentElement != null)
+            if (Package.Configuration.DocumentElement != null)
             {
                 var xNodes = GetConfigurationParameters(configurationParameter);
 
@@ -40,11 +40,11 @@ namespace SoftwareDesign_lab1.Entities
 
                         foreach (var attribute in configurationParameter.Attributes)
                         {
-                            messages.AddRange(ValidatorFactory.GetValidator(attribute.ValidationMode, _package).Validate(attribute,i));
+                            messages.AddRange(ValidatorFactory.GetValidator(attribute.ValidationMode, Package,attribute.AuxiliaryValues).Validate(attribute,i));
                         }
                         foreach (var parameter in configurationParameter.NestedParameters)
                         {
-                            messages.AddRange(ValidatorFactory.GetValidator(parameter.ValidationMode, _package).Validate(parameter));
+                            messages.AddRange(ValidatorFactory.GetValidator(parameter.ValidationMode, Package,parameter.AuxiliaryValues).Validate(parameter));
                         }
                     }
                 }

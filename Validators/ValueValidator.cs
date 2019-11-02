@@ -11,7 +11,7 @@ namespace SoftwareDesign_lab1.Validators
 
         protected ValueValidator(Package package)
         {
-            _package = package;
+            Package = package;
         }
 
         public override IEnumerable<ValidationResultMessage> Validate(ConfigurationParameter configurationParameter)
@@ -20,7 +20,7 @@ namespace SoftwareDesign_lab1.Validators
 
             if (messages.Count != 0) return messages;
 
-            if (_package.Configuration.DocumentElement != null)
+            if (Package.Configuration.DocumentElement != null)
             {
                 var xNodes = base.GetConfigurationParameters(configurationParameter);
 
@@ -61,7 +61,7 @@ namespace SoftwareDesign_lab1.Validators
 
             if (messages.Count != 0) return messages;
 
-            if (_package.Configuration.DocumentElement != null)
+            if (Package.Configuration.DocumentElement != null)
             {
                 var attrValue =
                     GetConfigurationParamenterAttributeValue(configurationParameterAttribute, indexOfParentInGroup);
@@ -98,7 +98,7 @@ namespace SoftwareDesign_lab1.Validators
         private IEnumerable<ValidationResultMessage> GetMessagesFromExistenceValidator(ConfigurationParameter configurationParameter,int index = 0)
         {
             var messages = new List<ValidationResultMessage>();
-            var existenceValidator = new ExistenceValidator(_package);
+            var existenceValidator = new ExistenceValidator(Package);
 
             if (configurationParameter.GetType() == typeof(ConfigurationParameter))
             {

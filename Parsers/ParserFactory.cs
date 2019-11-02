@@ -12,6 +12,11 @@ namespace SoftwareDesign_lab1.Parsers
                 return new KrsuParser(package);
             }
 
+            if (typeName.Equals("CATS", StringComparison.OrdinalIgnoreCase))
+            {
+                return new CatsParser(package);
+            }
+
             return null;
         }
     }

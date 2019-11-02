@@ -10,7 +10,7 @@ namespace SoftwareDesign_lab1.Entities
 
         protected override bool CheckValue(string value)
         {
-            return _package.PackageZipArchive.GetEntry(value) != null;
+            return Package.PackageZipArchive.GetEntry(value) != null;
         }
     }
 }

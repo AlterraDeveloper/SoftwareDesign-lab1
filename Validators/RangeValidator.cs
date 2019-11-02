@@ -1,15 +1,12 @@
-﻿using SoftwareDesign_lab1.Entities;
+﻿using System;
+using SoftwareDesign_lab1.Entities;
 
 namespace SoftwareDesign_lab1.Validators
 {
     class RangeValidator : ValueValidator
     {
-        private int _leftBound, _rightBound;
-        public RangeValidator(Package package) : base(package)
-        {
-            _leftBound = 0;
-            _rightBound = 0;
-        }
+        private readonly int _leftBound;
+        private readonly int _rightBound;
 
         public RangeValidator(Package package, int leftBound, int rightBound) : base(package)
         {
@@ -19,7 +16,7 @@ namespace SoftwareDesign_lab1.Validators
 
         protected override bool CheckValue(string value)
         {
-            int intValue = 0;
+            int intValue;
 
             if (int.TryParse(value, out intValue))
             {
