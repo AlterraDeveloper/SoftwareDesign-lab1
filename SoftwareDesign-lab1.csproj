@@ -42,6 +42,7 @@
     <Compile Include="Entities\ConfigurationParameter.cs" />
     <Compile Include="Entities\ConfigurationParameterAttribute.cs" />
     <Compile Include="Parsers\CatsParser.cs" />
+    <Compile Include="Parsers\Pcms1Parser.cs" />
     <Compile Include="Validators\CollectionValidator.cs" />
     <Compile Include="Validators\ExistenceValidator.cs" />
     <Compile Include="Validators\FileExistenceValidator.cs" />

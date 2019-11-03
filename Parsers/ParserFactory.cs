@@ -17,6 +17,11 @@ namespace SoftwareDesign_lab1.Parsers
                 return new CatsParser(package);
             }
 
+            if (typeName.Equals("PCMS1", StringComparison.OrdinalIgnoreCase))
+            {
+                return new Pcms1Parser(package);
+            }
+
             return null;
         }
     }
