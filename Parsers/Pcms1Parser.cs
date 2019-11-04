@@ -283,13 +283,375 @@ namespace SoftwareDesign_lab1.Parsers
                         },
                     }
                 },
-                //new ConfigurationParameter
-                //{
-                //    Name = "",
-                //    IsRequired = true,
-                //    ValidationMode=Enums.CheckMode.Existing,
-
-                //},
+                new ConfigurationParameter
+                {
+                    Name = "files",
+                    IsRequired = true,
+                    ValidationMode=Enums.CheckMode.Existing,
+                    NestedParameters = new List<ConfigurationParameter>
+                    {
+                        new ConfigurationParameter
+                        {
+                            Name = "files/resources",
+                            IsRequired = true,
+                            ValidationMode = Enums.CheckMode.Existing,
+                            NestedParameters = new List<ConfigurationParameter>
+                            {
+                                new ConfigurationParameter
+                                {
+                                    Name = "files/resources/file",
+                                    IsRequired = true,
+                                    ValidationMode = Enums.CheckMode.Existing,
+                                    Attributes = new List<ConfigurationParameterAttribute>
+                                    {
+                                        new ConfigurationParameterAttribute
+                                        {
+                                            ParameterName = "files/resources/file",
+                                            Name = "path",
+                                            IsRequired = true,
+                                            ValidationMode = Enums.CheckMode.FileExisting,
+                                        },
+                                        new ConfigurationParameterAttribute
+                                        {
+                                            ParameterName = "files/resources/file",
+                                            Name = "type",
+                                            IsRequired = false,
+                                            ValidationMode = Enums.CheckMode.ValueIsNotEmptyString,
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        new ConfigurationParameter
+                        {
+                            Name = "files/executables",
+                            IsRequired = true,
+                            ValidationMode = Enums.CheckMode.Existing,
+                            NestedParameters = new List<ConfigurationParameter>
+                            {
+                                new ConfigurationParameter
+                                {
+                                    Name = "files/executables/executable",
+                                    IsRequired = true,
+                                    ValidationMode = Enums.CheckMode.Existing,
+                                    NestedParameters = new List<ConfigurationParameter>
+                                    {
+                                        new ConfigurationParameter
+                                        {
+                                            Name = "files/executables/executable/source",
+                                            IsRequired =true,
+                                            ValidationMode = Enums.CheckMode.Existing,
+                                            Attributes = new List<ConfigurationParameterAttribute>
+                                            {
+                                                 new ConfigurationParameterAttribute
+                                                 {
+                                                    ParameterName = "files/executables/executable/source",
+                                                    Name = "path",
+                                                    IsRequired = true,
+                                                    ValidationMode = Enums.CheckMode.FileExisting,
+                                                 },
+                                                 new ConfigurationParameterAttribute
+                                                 {
+                                                    ParameterName = "files/executables/executable/source",
+                                                    Name = "type",
+                                                    IsRequired = false,
+                                                    ValidationMode = Enums.CheckMode.ValueIsNotEmptyString,
+                                                 },
+                                            }
+                                        },
+                                         new ConfigurationParameter
+                                        {
+                                            Name = "files/executables/executable/binary",
+                                            IsRequired =true,
+                                            ValidationMode = Enums.CheckMode.Existing,
+                                            Attributes = new List<ConfigurationParameterAttribute>
+                                            {
+                                                 new ConfigurationParameterAttribute
+                                                 {
+                                                    ParameterName = "files/executables/executable/binary",
+                                                    Name = "path",
+                                                    IsRequired = true,
+                                                    ValidationMode = Enums.CheckMode.FileExisting,
+                                                 },
+                                                 new ConfigurationParameterAttribute
+                                                 {
+                                                    ParameterName = "files/executables/executable/binary",
+                                                    Name = "type",
+                                                    IsRequired = false,
+                                                    ValidationMode = Enums.CheckMode.ValueIsNotEmptyString,
+                                                 },
+                                            }
+                                        },
+                                    },
+                                    Attributes = new List<ConfigurationParameterAttribute>
+                                    {
+                                        new ConfigurationParameterAttribute
+                                        {
+                                            ParameterName = "files/executables/executable",
+                                            Name = "path",
+                                            IsRequired = true,
+                                            ValidationMode = Enums.CheckMode.FileExisting,
+                                        },
+                                        new ConfigurationParameterAttribute
+                                        {
+                                            ParameterName = "files/executables/executable",
+                                            Name = "type",
+                                            IsRequired = false,
+                                            ValidationMode = Enums.CheckMode.ValueIsNotEmptyString,
+                                        }
+                                    },
+                                }
+                            }
+                        }
+                    }
+                },
+                new ConfigurationParameter
+                {
+                    Name = "assets",
+                    IsRequired = true,
+                    ValidationMode = Enums.CheckMode.Existing,
+                    NestedParameters = new List<ConfigurationParameter>
+                    {
+                        new ConfigurationParameter
+                        {
+                            Name = "assets/checker",
+                            IsRequired = true,
+                            ValidationMode = Enums.CheckMode.Existing,
+                            Attributes = new List<ConfigurationParameterAttribute>
+                            {
+                                new ConfigurationParameterAttribute
+                                {
+                                    ParameterName = "assets/checker",
+                                    Name = "name",
+                                    IsRequired = true,
+                                    ValidationMode = Enums.CheckMode.ValueIsNotEmptyString,
+                                },
+                                new ConfigurationParameterAttribute
+                                {
+                                    ParameterName = "assets/checker",
+                                    Name = "type",
+                                    IsRequired = true,
+                                    ValidationMode = Enums.CheckMode.ValueIsNotEmptyString,
+                                },
+                            },
+                            NestedParameters = new List<ConfigurationParameter>
+                            {
+                                new ConfigurationParameter
+                                {
+                                    Name = "assets/checker/source",
+                                    IsRequired = true,
+                                    ValidationMode = Enums.CheckMode.Existing,
+                                    Attributes = new List<ConfigurationParameterAttribute>
+                                    {
+                                        new ConfigurationParameterAttribute
+                                        {
+                                            ParameterName = "assets/checker/source",
+                                            Name = "path",
+                                            IsRequired = true,
+                                            ValidationMode = Enums.CheckMode.FileExisting,
+                                        },
+                                        new ConfigurationParameterAttribute
+                                        {
+                                            ParameterName = "assets/checker/source",
+                                            Name = "type",
+                                            IsRequired = false,
+                                            ValidationMode = Enums.CheckMode.ValueIsNotEmptyString,
+                                        }
+                                    },
+                                },
+                                 new ConfigurationParameter
+                                 {
+                                    Name = "assets/checker/binary",
+                                    IsRequired = true,
+                                    ValidationMode = Enums.CheckMode.Existing,
+                                    Attributes = new List<ConfigurationParameterAttribute>
+                                    {
+                                        new ConfigurationParameterAttribute
+                                        {
+                                            ParameterName = "assets/checker/binary",
+                                            Name = "path",
+                                            IsRequired = true,
+                                            ValidationMode = Enums.CheckMode.FileExisting,
+                                        },
+                                        new ConfigurationParameterAttribute
+                                        {
+                                            ParameterName = "assets/checker/binary",
+                                            Name = "type",
+                                            IsRequired = false,
+                                            ValidationMode = Enums.CheckMode.ValueIsNotEmptyString,
+                                        }
+                                    },
+                                 },
+                                  new ConfigurationParameter
+                                  {
+                                    Name = "assets/checker/copy",
+                                    IsRequired = true,
+                                    ValidationMode = Enums.CheckMode.Existing,
+                                    Attributes = new List<ConfigurationParameterAttribute>
+                                    {
+                                        new ConfigurationParameterAttribute
+                                        {
+                                            ParameterName = "assets/checker/copy",
+                                            Name = "path",
+                                            IsRequired = true,
+                                            ValidationMode = Enums.CheckMode.FileExisting,
+                                        },
+                                    },
+                                  },
+                                  new ConfigurationParameter
+                                  {
+                                      Name = "assets/checker/testset",
+                                      IsRequired = true,
+                                      ValidationMode = Enums.CheckMode.Existing,
+                                      NestedParameters = new List<ConfigurationParameter>
+                                      {
+                                          new ConfigurationParameter
+                                          {
+                                               Name = "assets/checker/testset/test-count",
+                                               IsRequired = true,
+                                               ValidationMode = Enums.CheckMode.ValueIsNumber,
+                                          },
+                                          new ConfigurationParameter
+                                          {
+                                               Name = "assets/checker/testset/input-path-pattern",
+                                               IsRequired = true,
+                                               ValidationMode = Enums.CheckMode.ValueIsNotEmptyString,
+                                          },
+                                          new ConfigurationParameter
+                                          {
+                                               Name = "assets/checker/testset/output-path-pattern",
+                                               IsRequired = true,
+                                               ValidationMode = Enums.CheckMode.ValueIsNotEmptyString,
+                                          },
+                                          new ConfigurationParameter
+                                          {
+                                               Name = "assets/checker/testset/answer-path-pattern",
+                                               IsRequired = true,
+                                               ValidationMode = Enums.CheckMode.ValueIsNotEmptyString,
+                                          },
+                                          new ConfigurationParameter
+                                          {
+                                               Name = "assets/checker/testset/tests",
+                                               IsRequired = false,
+                                               ValidationMode = Enums.CheckMode.Existing,
+                                          },
+                                      }
+                                  }
+                            },
+                        },
+                        new ConfigurationParameter
+                        {
+                            Name = "assets/validators",
+                            IsRequired = true,
+                            ValidationMode = Enums.CheckMode.Existing,
+                            NestedParameters = new List<ConfigurationParameter>
+                            {
+                                new ConfigurationParameter
+                                {
+                                    Name = "assets/validators/validator",
+                                    IsRequired = true,
+                                    ValidationMode = Enums.CheckMode.Existing,
+                                    NestedParameters = new List<ConfigurationParameter>
+                                    {
+                                        new ConfigurationParameter
+                                        {
+                                            Name = "assets/validators/validator/source",
+                                            IsRequired =true,
+                                            ValidationMode = Enums.CheckMode.Existing,
+                                            Attributes = new List<ConfigurationParameterAttribute>
+                                            {
+                                                new ConfigurationParameterAttribute
+                                                {
+                                                    ParameterName = "assets/validators/validator/source",
+                                                    Name = "path",
+                                                    IsRequired = true,
+                                                    ValidationMode = Enums.CheckMode.FileExisting,
+                                                },
+                                                new ConfigurationParameterAttribute
+                                                {
+                                                    ParameterName = "assets/validators/validator/source",
+                                                    Name = "type",
+                                                    IsRequired = true,
+                                                    ValidationMode = Enums.CheckMode.ValueIsNotEmptyString,
+                                                },
+                                            }
+                                        },
+                                        new ConfigurationParameter
+                                        {
+                                            Name = "assets/validators/validator/binary",
+                                            IsRequired =true,
+                                            ValidationMode = Enums.CheckMode.Existing,
+                                            Attributes = new List<ConfigurationParameterAttribute>
+                                            {
+                                                new ConfigurationParameterAttribute
+                                                {
+                                                    ParameterName = "assets/validators/validator/binary",
+                                                    Name = "path",
+                                                    IsRequired = true,
+                                                    ValidationMode = Enums.CheckMode.FileExisting,
+                                                },
+                                                new ConfigurationParameterAttribute
+                                                {
+                                                    ParameterName = "assets/validators/validator/binary",
+                                                    Name = "type",
+                                                    IsRequired = true,
+                                                    ValidationMode = Enums.CheckMode.ValueIsNotEmptyString,
+                                                },
+                                            }
+                                        },
+                                        new ConfigurationParameter
+                                        {
+                                             Name = "assets/validators/validator/testset",
+                                             IsRequired = true,
+                                             ValidationMode = Enums.CheckMode.Existing,
+                                             NestedParameters = new List<ConfigurationParameter>
+                                             {
+                                                 new ConfigurationParameter
+                                                 {
+                                                      Name = "assets/validators/validator/testset/test-count",
+                                                      IsRequired = true,
+                                                      ValidationMode = Enums.CheckMode.ValueIsNumber,
+                                                 },
+                                                 new ConfigurationParameter
+                                                 {
+                                                      Name = "assets/validators/validator/testset/input-path-pattern",
+                                                      IsRequired = true,
+                                                      ValidationMode = Enums.CheckMode.ValueIsNotEmptyString,
+                                                 },
+                                                 new ConfigurationParameter
+                                                 {
+                                                      Name = "assets/validators/validator/testset/tests",
+                                                      IsRequired = false,
+                                                      ValidationMode = Enums.CheckMode.Existing,
+                                                      NestedParameters = new List<ConfigurationParameter>
+                                                      {
+                                                          new ConfigurationParameter
+                                                          {
+                                                              Name = "assets/validators/validator/testset/tests/test",
+                                                              IsRequired =true,
+                                                              ValidationMode = Enums.CheckMode.Existing,
+                                                              Attributes = new List<ConfigurationParameterAttribute>
+                                                              {
+                                                                  new ConfigurationParameterAttribute
+                                                                  {
+                                                                      ParameterName = "assets/validators/validator/testset/tests/test",
+                                                                      Name = "verdict",
+                                                                      IsRequired = true,
+                                                                      ValidationMode = Enums.CheckMode.ValueIsInCollection,
+                                                                      AuxiliaryValues = new object[]{"valid","invalid"},
+                                                                  }
+                                                              }
+                                                          }
+                                                      }
+                                                 },
+                                             }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },                    
+                }
                 //next...
             };
         }
