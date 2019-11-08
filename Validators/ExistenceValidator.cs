@@ -40,11 +40,11 @@ namespace SoftwareDesign_lab1.Validators
 
                         foreach (var attribute in configurationParameter.Attributes)
                         {
-                            messages.AddRange(ValidatorFactory.GetValidator(attribute.ValidationMode, Package,attribute.AuxiliaryValues).Validate(attribute,i));
+                            messages.AddRange(ValidatorFactory.GetValidator(attribute.ValidationMode, Package, attribute.AuxiliaryValues).Validate(attribute, i));
                         }
                         foreach (var parameter in configurationParameter.NestedParameters)
                         {
-                            messages.AddRange(ValidatorFactory.GetValidator(parameter.ValidationMode, Package,parameter.AuxiliaryValues).Validate(parameter));
+                            messages.AddRange(ValidatorFactory.GetValidator(parameter.ValidationMode, Package, parameter.AuxiliaryValues).Validate(parameter));
                         }
                     }
                 }
@@ -74,7 +74,7 @@ namespace SoftwareDesign_lab1.Validators
                 Offset = "    "
             };
 
-            if (string.IsNullOrEmpty(attrValue) ==false)
+            if (string.IsNullOrEmpty(attrValue) == false)
             {
                 message.Status = StatusWords.OK;
             }

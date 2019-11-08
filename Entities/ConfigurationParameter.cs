@@ -26,18 +26,18 @@ namespace SoftwareDesign_lab1.Entities
         {
             var messages = new List<ValidationResultMessage>();
 
-            messages.AddRange(ValidatorFactory.GetValidator(ValidationMode, package,AuxiliaryValues).Validate(this));
+            messages.AddRange(ValidatorFactory.GetValidator(ValidationMode, package, AuxiliaryValues).Validate(this));
 
-            if (messages.All(m => m.Status == StatusWords.OK))
+            if (messages.All(m => m.Status == StatusWords.OK) & ValidationMode != CheckMode.Existing)
             {
                 foreach (var attribute in Attributes)
                 {
-                    messages.AddRange(ValidatorFactory.GetValidator(attribute.ValidationMode, package,attribute.AuxiliaryValues).Validate(attribute));
+                    messages.AddRange(ValidatorFactory.GetValidator(attribute.ValidationMode, package, attribute.AuxiliaryValues).Validate(attribute));
                 }
 
                 foreach (var nestedParameter in NestedParameters)
                 {
-                    messages.AddRange(ValidatorFactory.GetValidator(nestedParameter.ValidationMode, package,nestedParameter.AuxiliaryValues).Validate(nestedParameter));
+                    messages.AddRange(ValidatorFactory.GetValidator(nestedParameter.ValidationMode, package, nestedParameter.AuxiliaryValues).Validate(nestedParameter));
                 }
             }
 

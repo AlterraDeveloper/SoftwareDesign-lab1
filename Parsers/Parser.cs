@@ -10,7 +10,7 @@ namespace SoftwareDesign_lab1.Parsers
         protected Package Package;
 
         protected List<ConfigurationParameter> ConfigurationParameters;
-        public virtual List<ValidationResultMessage> Parse() 
+        public virtual List<ValidationResultMessage> Parse()
         {
             var parseResult = new List<ValidationResultMessage>();
 

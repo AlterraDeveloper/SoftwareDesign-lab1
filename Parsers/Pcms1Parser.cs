@@ -1,5 +1,6 @@
 ﻿using SoftwareDesign_lab1.Entities;
 using System.Collections.Generic;
+using SoftwareDesign_lab1.Enums;
 
 namespace SoftwareDesign_lab1.Parsers
 {
@@ -649,10 +650,199 @@ namespace SoftwareDesign_lab1.Parsers
                                     }
                                 }
                             }
+                        },
+                        new ConfigurationParameter
+                        {
+                            Name = "assets/solutions",
+                            IsRequired = true,
+                            ValidationMode = CheckMode.Existing,
+                            NestedParameters = new List<ConfigurationParameter>
+                            {
+                                new ConfigurationParameter
+                                {
+                                    Name = "assets/solutions/solution",
+                                    IsRequired = true,
+                                    ValidationMode = CheckMode.Existing,
+                                    Attributes = new List<ConfigurationParameterAttribute>
+                                    {
+                                        new ConfigurationParameterAttribute
+                                        {
+                                            ParameterName = "assets/solutions/solution",
+                                            Name = "tag",
+                                            IsRequired = true,
+                                            ValidationMode = CheckMode.ValueIsNotEmptyString
+                                        }
+                                    },
+                                    NestedParameters = new List<ConfigurationParameter>
+                                    {
+                                        new ConfigurationParameter
+                                        {
+                                            Name = "assets/solutions/solution/source",
+                                            IsRequired = true,
+                                            ValidationMode = CheckMode.Existing,
+                                            Attributes = new List<ConfigurationParameterAttribute>
+                                            {
+                                                new ConfigurationParameterAttribute
+                                                {
+                                                    ParameterName = "assets/solutions/solution/source",
+                                                    Name = "path",
+                                                    IsRequired = true,
+                                                    ValidationMode = CheckMode.FileExisting,
+                                                },
+                                                new ConfigurationParameterAttribute
+                                                {
+                                                    ParameterName = "assets/solutions/solution/source",
+                                                    Name = "type",
+                                                    IsRequired = true,
+                                                    ValidationMode = CheckMode.ValueIsNotEmptyString,
+                                                },
+                                            }
+                                        },
+                                        new ConfigurationParameter
+                                        {
+                                            Name = "assets/solutions/solution/binary",
+                                            IsRequired = true,
+                                            ValidationMode = CheckMode.Existing,
+                                            Attributes = new List<ConfigurationParameterAttribute>
+                                            {
+                                                new ConfigurationParameterAttribute
+                                                {
+                                                    ParameterName = "assets/solutions/solution/binary",
+                                                    Name = "path",
+                                                    IsRequired = true,
+                                                    ValidationMode = CheckMode.FileExisting,
+                                                },
+                                                new ConfigurationParameterAttribute
+                                                {
+                                                    ParameterName = "assets/solutions/solution/binary",
+                                                    Name = "type",
+                                                    IsRequired = true,
+                                                    ValidationMode = CheckMode.ValueIsNotEmptyString,
+                                                },
+                                            }
+                                        },
+                                    }
+                                }
+                            }
                         }
                     },                    
-                }
-                //next...
+                },
+                new ConfigurationParameter
+                {
+                    Name = "properties",
+                    IsRequired = true,
+                    ValidationMode = CheckMode.Existing,
+                    NestedParameters = new List<ConfigurationParameter>
+                    {
+                        new ConfigurationParameter
+                        {
+                            Name = "properties/property",
+                            IsRequired = true,
+                            ValidationMode = CheckMode.Existing,
+                            Attributes = new List<ConfigurationParameterAttribute>
+                            {
+                                new ConfigurationParameterAttribute
+                                {
+                                    ParameterName = "properties/property",
+                                    Name = "name",
+                                    IsRequired = false,
+                                    ValidationMode = CheckMode.ValueIsNotEmptyString,
+                                },
+                                new ConfigurationParameterAttribute
+                                {
+                                    ParameterName = "properties/property",
+                                    Name = "value",
+                                    IsRequired = false,
+                                    ValidationMode = CheckMode.ValueIsNotEmptyString,
+                                }
+                            }
+                        }
+                    }
+                },
+                new ConfigurationParameter
+                {
+                    Name = "stresses",
+                    IsRequired = true,
+                    ValidationMode = CheckMode.Existing,
+                    NestedParameters = new List<ConfigurationParameter>
+                    {
+                        new ConfigurationParameter
+                        {
+                            Name = "stresses/stress-count",
+                            IsRequired = true,
+                            ValidationMode = CheckMode.ValueIsNumber,
+                        },
+                        new ConfigurationParameter
+                        {
+                            Name = "stresses/stress-path-pattern",
+                            IsRequired = true,
+                            ValidationMode = CheckMode.ValueIsNotEmptyString,
+                        },
+                        new ConfigurationParameter
+                        {
+                            Name = "stresses/list",
+                            IsRequired = true,
+                            ValidationMode = CheckMode.Existing,
+                        },
+                    }
+                },
+                new ConfigurationParameter
+                {
+                    Name = "documents",
+                    IsRequired = true,
+                    ValidationMode = CheckMode.Existing,
+                    NestedParameters = new List<ConfigurationParameter>
+                    {
+                        new ConfigurationParameter
+                        {
+                            Name = "documents/document",
+                            IsRequired = true,
+                            ValidationMode = CheckMode.Existing,
+                            Attributes = new List<ConfigurationParameterAttribute>
+                            {
+                                new ConfigurationParameterAttribute
+                                {
+                                    ParameterName = "documents/document",
+                                    Name = "path",
+                                    IsRequired = true,
+                                    ValidationMode = CheckMode.FileExisting,
+                                },
+                                new ConfigurationParameterAttribute
+                                {
+                                    ParameterName = "documents/document",
+                                    Name = "type",
+                                    IsRequired = true,
+                                    ValidationMode = CheckMode.ValueIsNotEmptyString,
+                                },
+                            }
+                        }
+                    }
+                },
+                new ConfigurationParameter
+                {
+                    Name = "tags",
+                    IsRequired = false,
+                    ValidationMode = CheckMode.Existing,
+                    NestedParameters = new List<ConfigurationParameter>
+                    {
+                        new ConfigurationParameter
+                        {
+                            Name = "tags/tag",
+                            IsRequired = false,
+                            ValidationMode = CheckMode.Existing,
+                            Attributes = new List<ConfigurationParameterAttribute>
+                            {
+                                new ConfigurationParameterAttribute
+                                {
+                                    ParameterName = "tags/tag",
+                                    Name = "value",
+                                    IsRequired = false,
+                                    ValidationMode = CheckMode.ValueIsNotEmptyString,
+                                }
+                            }
+                        }
+                    }
+                },
             };
         }
     }
