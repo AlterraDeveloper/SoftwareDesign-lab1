@@ -22,6 +22,11 @@ namespace SoftwareDesign_lab1.Parsers
                 return new Pcms1Parser(package);
             }
 
+            if (typeName.Equals("PCMS2", StringComparison.OrdinalIgnoreCase))
+            {
+                return new Pcms2Parser(package);
+            }
+
             return null;
         }
     }
